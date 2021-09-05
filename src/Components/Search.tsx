@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Button, InputAdornment, makeStyles, TextField } from '@material-ui/core';
+import { Button, InputAdornment, makeStyles, TextField, Theme } from '@material-ui/core';
 
-const useStyles = makeStyles(() => ({
-  // hide default browser behaviour for number input
+const useStyles = makeStyles((theme: Theme) => ({
   input: {
+    width: 280,
+    marginBottom: theme.spacing(4),
+    // hide default browser behaviour for number input
     '& input[type=number]': {
       '-moz-appearance': 'textfield',
     },
