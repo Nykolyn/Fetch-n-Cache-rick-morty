@@ -24,6 +24,7 @@ const useMemoisedGetOne = <T extends TRecord>(cached: TCache<T> = {}, cacheName?
     }
 
     try {
+      setIsFetching(true);
       const { data } = await axios.get(url);
       const newCache = { ...cache, [url]: data };
       if (cacheName) localStorage.setItem(cacheName, JSON.stringify(newCache));

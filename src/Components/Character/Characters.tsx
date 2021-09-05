@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Button, List, ListItem, makeStyles, Theme } from '@material-ui/core';
 
-import { TCharacter } from '../../App';
+import { CHARACTERS_CACHE_NAME, TCharacter } from '../../App';
 
 const useStyles = makeStyles((theme: Theme) => ({
   item: {
@@ -34,6 +34,7 @@ const Characters: React.FC<TCharacterProps> = ({ characters, current, setCurrent
 
   const handleResetCharacters = () => {
     setCache({});
+    localStorage.removeItem(CHARACTERS_CACHE_NAME)
   };
 
   return (

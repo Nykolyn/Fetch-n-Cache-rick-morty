@@ -25,8 +25,10 @@ export type TCharacter = {
   url: string;
 };
 
+export const CHARACTERS_CACHE_NAME = 'characters';
+
 const charactersCache = () => {
-  const characters = localStorage.getItem('characters');
+  const characters = localStorage.getItem(CHARACTERS_CACHE_NAME);
 
   return characters ? JSON.parse(characters) : {};
 };
@@ -34,7 +36,7 @@ const charactersCache = () => {
 const App = () => {
   const { isFetching, error, fetchData, data, cache, setData, setCache } = useMemoisedGetOne<TCharacter>(
     charactersCache(),
-    'characters'
+    CHARACTERS_CACHE_NAME
   );
 
   const onSearch = async (search: string) => {
