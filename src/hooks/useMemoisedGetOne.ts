@@ -1,53 +1,45 @@
 import axios from 'axios';
-import { useEffect, useState, useRef } from 'react';
+import { useState } from 'react';
 
 type TRecord = {
   id: string | number;
   [key: string]: any;
 };
 
-const useMemoisedGetOne = <T extends TRecord>(url: string): typeof returnState => {
-  const cache = useRef<{ [key: string]: T }>({});
+type TCache<T> = { [key: string]: T };
 
+const useMemoisedGetOne = <T extends TRecord>(cached: TCache<T> = {}, cacheName?: string): typeof returnState => {
+  const [cache, setCache] = useState<TCache<T>>(cached);
   const [isFetching, setIsFetching] = useState(false);
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<any>();
 
-  useEffect(() => {
+  const fetchData = async (url: string) => {
     if (!url) return;
-    let cancelRequest = false;
 
-    const fetchData = async () => {
-      const memoisedRecord = cache.current[url];
-      if (memoisedRecord) {
-        setData(memoisedRecord);
-        return;
-      }
+    const memoisedRecord = cache[url];
+    if (memoisedRecord) {
+      setData(memoisedRecord);
+      return;
+    }
 
-      try {
-        const { data } = await axios.get(url);
-        cache.current[url] = data;
-        if (cancelRequest) return;
+    try {
+      const { data } = await axios.get(url);
+      const newCache = { ...cache, [url]: data };
+      if (cacheName) localStorage.setItem(cacheName, JSON.stringify(newCache));
+      setCache(newCache);
 
-        setData(data);
-        setError(null);
-      } catch (e: any) {
-        if (cancelRequest) return;
-        setError(axios.isAxiosError(e ? e.response?.data?.error ?? 'Not found' : e));
-        setData(null);
-      } finally {
-        setIsFetching(false);
-      }
-    };
+      setData(data);
+      if (error) setError(null);
+    } catch (e: any) {
+      setError(axios.isAxiosError(e ? e.response?.data?.error ?? 'Not found' : e));
+      if (data) setData(null);
+    } finally {
+      setIsFetching(false);
+    }
+  };
 
-    fetchData();
-
-    return () => {
-      cancelRequest = true;
-    };
-  }, [url]);
-
-  const returnState = { isFetching, error, data, setData, cache: cache.current } as const;
+  const returnState = { isFetching, fetchData, error, data, setData, setCache, cache } as const;
 
   return returnState;
 };

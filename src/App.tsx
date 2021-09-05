@@ -1,5 +1,4 @@
 import { Box } from '@material-ui/core';
-import { useState } from 'react';
 
 import useMemoisedGetOne from './hooks/useMemoisedGetOne';
 import Search from './Components/Search';
@@ -26,15 +25,20 @@ export type TCharacter = {
   url: string;
 };
 
-const App = () => {
-  const [url, setUrl] = useState('');
+const charactersCache = () => {
+  const characters = localStorage.getItem('characters');
 
-  const { isFetching, error, data, cache, setData } = useMemoisedGetOne<TCharacter>(
-    url ? `${process.env.REACT_APP_API_URL}/${url}` : ''
+  return characters ? JSON.parse(characters) : {};
+};
+
+const App = () => {
+  const { isFetching, error, fetchData, data, cache, setData, setCache } = useMemoisedGetOne<TCharacter>(
+    charactersCache(),
+    'characters'
   );
 
   const onSearch = async (search: string) => {
-    setUrl(search);
+    fetchData(search ? `${process.env.REACT_APP_API_URL}/${search}` : '');
   };
 
   return (
@@ -43,7 +47,7 @@ const App = () => {
         <Search isFetching={isFetching} onSearch={onSearch} />
         <CharacterCard error={error} isFetching={isFetching} character={data} />
       </Box>
-      <Characters setCurrent={setData} current={data?.id} characters={Object.values(cache)} />
+      <Characters setCache={setCache} setCurrent={setData} current={data?.id} characters={Object.values(cache)} />
     </Box>
   );
 };
