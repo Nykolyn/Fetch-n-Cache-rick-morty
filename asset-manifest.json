@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/fetch-n-cache-rick-morty/static/js/main.be4f2ddc.chunk.js",
-    "main.js.map": "/fetch-n-cache-rick-morty/static/js/main.be4f2ddc.chunk.js.map",
+    "main.js": "/fetch-n-cache-rick-morty/static/js/main.52df1656.chunk.js",
+    "main.js.map": "/fetch-n-cache-rick-morty/static/js/main.52df1656.chunk.js.map",
     "runtime-main.js": "/fetch-n-cache-rick-morty/static/js/runtime-main.b827316e.js",
     "runtime-main.js.map": "/fetch-n-cache-rick-morty/static/js/runtime-main.b827316e.js.map",
     "static/js/2.ec9a9677.chunk.js": "/fetch-n-cache-rick-morty/static/js/2.ec9a9677.chunk.js",
@@ -14,6 +14,6 @@
   "entrypoints": [
     "static/js/runtime-main.b827316e.js",
     "static/js/2.ec9a9677.chunk.js",
-    "static/js/main.be4f2ddc.chunk.js"
+    "static/js/main.52df1656.chunk.js"
   ]
 }
