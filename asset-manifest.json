@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/fetch-n-cache-rick-morty/static/js/main.be4f2ddc.chunk.js",
+    "main.js.map": "/fetch-n-cache-rick-morty/static/js/main.be4f2ddc.chunk.js.map",
+    "runtime-main.js": "/fetch-n-cache-rick-morty/static/js/runtime-main.b827316e.js",
+    "runtime-main.js.map": "/fetch-n-cache-rick-morty/static/js/runtime-main.b827316e.js.map",
+    "static/js/2.ec9a9677.chunk.js": "/fetch-n-cache-rick-morty/static/js/2.ec9a9677.chunk.js",
+    "static/js/2.ec9a9677.chunk.js.map": "/fetch-n-cache-rick-morty/static/js/2.ec9a9677.chunk.js.map",
+    "static/js/3.7f856e39.chunk.js": "/fetch-n-cache-rick-morty/static/js/3.7f856e39.chunk.js",
+    "static/js/3.7f856e39.chunk.js.map": "/fetch-n-cache-rick-morty/static/js/3.7f856e39.chunk.js.map",
+    "index.html": "/fetch-n-cache-rick-morty/index.html",
+    "static/js/2.ec9a9677.chunk.js.LICENSE.txt": "/fetch-n-cache-rick-morty/static/js/2.ec9a9677.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b827316e.js",
+    "static/js/2.ec9a9677.chunk.js",
+    "static/js/main.be4f2ddc.chunk.js"
+  ]
+}
