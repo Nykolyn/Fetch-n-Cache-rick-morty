@@ -1,15 +1,15 @@
 import { Box } from '@material-ui/core';
 import { useState } from 'react';
-import axios from 'axios';
 
+import useMemoisedGetOne from './hooks/useMemoisedGetOne';
 import Search from './Components/Search';
-import { CharacterCard } from './Components/Character';
+import { CharacterCard, Characters } from './Components/Character';
 
 export type TCharacter = {
   created: Date;
   episode: string[];
   gender: string;
-  id: string | number;
+  id: string;
   image: string;
   location: {
     name: string;
@@ -27,33 +27,23 @@ export type TCharacter = {
 };
 
 const App = () => {
-  const [isFetching, setIsFetching] = useState(false);
-  const [error, setError] = useState<any>(null);
-  const [character, setCharacter] = useState<TCharacter | null>(null);
+  const [url, setUrl] = useState('');
+
+  const { isFetching, error, data, cache, setData } = useMemoisedGetOne<TCharacter>(
+    url ? `${process.env.REACT_APP_API_URL}/${url}` : ''
+  );
 
   const onSearch = async (search: string) => {
-    setIsFetching(true);
-
-    try {
-      const { data } = await axios.get<TCharacter>(`${process.env.REACT_APP_API_URL}/${search}`);
-      setCharacter(data);
-      if (error) setError(null);
-    } catch (e: any) {
-      const defaultErrorMsg = 'Character not found';
-
-      setError(axios.isAxiosError(e) ? e.response?.data?.error ?? defaultErrorMsg : e);
-      if (character) setCharacter(null);
-    } finally {
-      setIsFetching(false);
-    }
+    setUrl(search);
   };
 
   return (
     <Box display="flex" p={12} justifyContent="space-between">
       <Box>
         <Search isFetching={isFetching} onSearch={onSearch} />
-        <CharacterCard error={error} isFetching={isFetching} character={character} />
+        <CharacterCard error={error} isFetching={isFetching} character={data} />
       </Box>
+      <Characters setCurrent={setData} current={data?.id} characters={Object.values(cache)} />
     </Box>
   );
 };

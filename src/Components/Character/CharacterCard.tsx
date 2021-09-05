@@ -34,4 +34,4 @@ const CharacterCard: React.FC<TCharacterCardProps> = ({ character, isFetching, e
   );
 };
 
-export default CharacterCard;
+export default React.memo(CharacterCard);

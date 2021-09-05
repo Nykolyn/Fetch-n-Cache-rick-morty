@@ -58,4 +58,4 @@ const Search: React.FC<TSearchProps> = ({ onSearch, isFetching }) => {
   );
 };
 
-export default Search;
+export default React.memo(Search);
