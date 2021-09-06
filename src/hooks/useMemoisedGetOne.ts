@@ -16,7 +16,7 @@ const useMemoisedGetOne = <T extends TRecord>(cached: TCache<T> = {}, cacheName?
 
   const fetchData = async (url: string) => {
     if (!url) return;
-
+    console.log(`url`, url);
     const memoisedRecord = cache[url];
     if (memoisedRecord) {
       setData(memoisedRecord);
@@ -33,14 +33,19 @@ const useMemoisedGetOne = <T extends TRecord>(cached: TCache<T> = {}, cacheName?
       setData(data);
       if (error) setError(null);
     } catch (e: any) {
-      setError(axios.isAxiosError(e ? e.response?.data?.error ?? 'Not found' : e));
+      setError(axios.isAxiosError(e) ? e.response?.data?.error ?? 'Not found' : e);
       if (data) setData(null);
     } finally {
       setIsFetching(false);
     }
   };
 
-  const returnState = { isFetching, fetchData, error, data, setData, setCache, cache } as const;
+  const handleSetData = (data: T) => {
+    if (error) setError(null);
+    setData(data);
+  };
+
+  const returnState = { isFetching, fetchData, error, data, setData: handleSetData, setCache, cache } as const;
 
   return returnState;
 };
